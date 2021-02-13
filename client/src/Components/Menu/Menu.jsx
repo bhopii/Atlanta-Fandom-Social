@@ -9,15 +9,15 @@ const Menu = (props) => {
         <div className="buttons col s4">
           <ul>
           <NavLink to="/home" className="savedPostBTN">
-            <i class="material-icons">home</i>
+            <i className="material-icons">home</i>
               Home
             </NavLink>
             <NavLink to="/savedPosts" className="savedPostBTN">
-            <i class="material-icons">save</i>
+            <i className="material-icons">save</i>
               Saved Posts
             </NavLink>
             <NavLink to="/post" className="savedPostBTN">
-            <i class="material-icons">create</i>
+            <i className="material-icons">create</i>
               Create Post
             </NavLink>
             

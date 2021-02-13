@@ -40,10 +40,10 @@ const SavedPosts = (props) => {
                 </div>
                 <div className="card-action">
                   <div className="Author">
-                    <h7>
+                    <h6>
                       Author: {author.firstName + " " + author.lastName},
                       Category: {category}, Date: {date}
-                    </h7>
+                    </h6>
                     <div />
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
+import API from "../../utils/API";
 
 import "./Login.css";
 
@@ -11,20 +12,20 @@ function Login(props) {
   const [error, setError] = useState("");
   const [redirect, setRedirect] = useState(null);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("/api/login", { username: userName, password: password })
-      .then((res) => {
-        localStorage.setItem("loginKey", res.data.token );
-        props.setToken(res.data.token);
-        setRedirect("/home");
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        setError(err.response.data.error);
-      });
+    try {
+      const response = await API.login(userName, password);
+      localStorage.setItem("loginKey", response.data.token );
+      props.setToken(response.data.token);
+      setRedirect("/home");
+    }catch(err) {
+      console.log(err);
+      setError(err.response.data.error);
+      window.setTimeout(() => {
+        setError(" ");
+      }, 2000);
+    }
   };
 
   if (redirect) {

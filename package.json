@@ -31,7 +31,8 @@
     "if-env": "^1.0.4",
     "init": "^0.1.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.14"
+    "mongoose": "^5.11.14",
+    "socket.io": "^3.1.1"
   },
   "devDependencies": {
     "concurrently": "^4.1.2",

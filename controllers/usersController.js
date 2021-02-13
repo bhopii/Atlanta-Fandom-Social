@@ -18,6 +18,7 @@ module.exports = {
         req.body.password
       );
       const token = await user.generateAuthToken();
+      console.log(user);
       res.status(200).json({ user, token });
     } catch (e) {
       res.status(404).json({ error: "Login failed" });
