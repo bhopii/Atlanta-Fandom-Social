@@ -1,11 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
 import API from "../../utils/API";
 
 import "./Login.css";
 
+import Logo from "../../assets-sort/logoBanner/logoAFS.png";
 function Login(props) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -16,10 +15,10 @@ function Login(props) {
     event.preventDefault();
     try {
       const response = await API.login(userName, password);
-      localStorage.setItem("loginKey", response.data.token );
+      localStorage.setItem("loginKey", response.data.token);
       props.setToken(response.data.token);
       setRedirect("/home");
-    }catch(err) {
+    } catch (err) {
       console.log(err);
       setError(err.response.data.error);
       window.setTimeout(() => {
@@ -34,9 +33,14 @@ function Login(props) {
 
   return (
     <div>
-      {error !== "" ? <Alert color="danger">{error}</Alert> : ""}
+      {error !== "" ? <div color="danger">{error}</div> : ""}
       <div className="titleHeaderContainer">
-        <h2 className="formHeader">Welcome to ATL Fandom Social</h2>
+        {/* <h2 className="formHeader">Welcome to ATL Fandom Social</h2> */}
+        <img
+          className="formHeader"
+          src={Logo}
+          alt="Where Fans Come Together"
+        ></img>
         <div className="formContainer">
           <div className="leftSide">
             <div className="formContentContainer">
@@ -82,5 +86,4 @@ function Login(props) {
     </div>
   );
 }
-
 export default Login;

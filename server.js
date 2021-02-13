@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/atlfandomsocial",
+  process.env.MONGODB_URI || "mongodb://localhost/atlfandomsocial5",
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
@@ -60,24 +60,24 @@ app.use(function(req, res, next) {
 require("./routes/userRoutes.js")(app);
 app.use("/api/content",auth , contentRoutes);
 
-const server = http.createServer(app);
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"]
-  }
-});
+// const server = http.createServer(app);
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST", "PUT", "DELETE"]
+//   }
+// });
 
-io.on('connection', (client) => {
+// io.on('connection', (client) => {
   
   
-  client.on('clientCameIn', (msg) => {
-    console.log('client is subscribing to timer with interval ', msg);
-    client.broadcast.emit('FromBackend', "User Joined");
-  });
-});
+//   client.on('clientCameIn', (msg) => {
+//     console.log('client is subscribing to timer with interval ', msg);
+//     client.broadcast.emit('FromBackend', "User Joined");
+//   });
+// });
 // Start the API server
-server.listen(PORT, function () {
+app.listen(PORT, function () {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
 

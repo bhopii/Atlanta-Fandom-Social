@@ -2,8 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
+import "./ViewPosts.css";
 const ENDPOINT = "http://localhost:3001";
 const socket = socketIOClient(ENDPOINT);
+
 
 const ViewPosts = (props) => {
   const [newUser, setNewUser] = useState("");
@@ -30,13 +32,14 @@ const ViewPosts = (props) => {
         <p>{newUser}</p>
       </div>
       {props.posts.map(
-        ({ _id, category, title, imageURL, date, contentText, author }, i) => (
+        ({ _id, category, title, imageURL, url, date, contentText, author }, i) => (
           <div className="row" key={i}>
             <div className="card">
               <div className="card-content white-text">
                 <span className="card-title">{title}</span>
-                <img src={imageURL} />
+                <img className="cardImage" src={imageURL}/>
                 <p>{contentText}</p>
+
               </div>
               <div className="card-action">
                 <FontAwesomeIcon
@@ -50,6 +53,7 @@ const ViewPosts = (props) => {
                   <h6>
                     Author: {author.firstName + " " + author.lastName},
                     Category: {category}, Date: {date.substring(0, 10)}
+                    <a href={url}>{url} </a>
                   </h6>
                   <div />
                 </div>

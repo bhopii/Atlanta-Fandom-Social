@@ -9,6 +9,7 @@ const Post = (props) => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [url, setUrl] = useState("");
   const [contentText, setContentText] = useState("");
   const [redirect, setRedirect] = useState(null);
 
@@ -22,6 +23,7 @@ const Post = (props) => {
           category,
           title,
           imageURL,
+          url,
           contentText,
         },
         {
@@ -55,10 +57,10 @@ const Post = (props) => {
           <Menu token={props.token} />
         </div>
 
-        <div className="col s12">
+        <div className="colForm col s8">
           <form className="col s8" onSubmit={handleFormSubmit}>
             <div className="row">
-              <div className="input-field col s6">
+              <div className="input-field col s8">
                 <input
                   placeholder="Enter a Category"
                   id="category"
@@ -74,7 +76,7 @@ const Post = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="input-field col m6">
+              <div className="input-field col s8">
                 <input
                   placeholder="Enter a Title"
                   id="title"
@@ -90,7 +92,7 @@ const Post = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="input-field col s6">
+              <div className="input-field col s8">
                 <input
                   placeholder="Enter image URL"
                   id="imageURL"
@@ -105,7 +107,7 @@ const Post = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="input-field col s6">
+              <div className="input-field col s8">
                 <input
                   placeholder="Enter your description"
                   id="contentText"
@@ -117,6 +119,21 @@ const Post = (props) => {
                   }}
                 />
                 <label htmlFor="contentText">Description</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="input-field col s8">
+                <input
+                  placeholder="Adding a link?"
+                  id="url"
+                  type="text"
+                  name="url"
+                  value={url}
+                  onChange={(e) => {
+                    setUrl(e.target.value);
+                  }}
+                />
+                <label htmlFor="url">Adding a Link?</label>
               </div>
             </div>
             <button className="createPostBTN">Create a Post</button>
