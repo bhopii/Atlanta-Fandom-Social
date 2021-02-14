@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Redirect, useParams } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
+import API from "../../utils/API";
 
 const EditPost = (props) => {
   const [category, setCategory] = useState("");
@@ -13,51 +14,25 @@ const EditPost = (props) => {
 
   const { id } = useParams();
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log(id);
     console.log(props.token);
     if (id) {
-      axios
-        .get(`/api/content/${id}`, {
-          headers: {
-            Authorization: props.token,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          const { category, title, imageURL, url, contentText } = response.data;
-          setCategory(category);
-          setTitle(title);
-          setImageURL(imageURL);
-          setUrl(url)
-          setContentText(contentText);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const response = await API.fetchPostData(id, props.token);
+      const { category, title, imageURL, url, contentText } = response.data;
+      setCategory(category);
+      setTitle(title);
+      setImageURL(imageURL);
+      setUrl(url)
+      setContentText(contentText);
     }
   }, []);
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(id);
-    axios
-      .put(
-        "/api/content/" + id,
-        { category, title, imageURL, url, contentText },
-        {
-          headers: {
-            Authorization: props.token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response.data);
-        setRedirect("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await API.updatePost(id, { category, title, imageURL, url, contentText }, props.token);
+    setRedirect("/profile");
   };
 
   if (props.token === null) {

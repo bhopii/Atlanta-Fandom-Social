@@ -1,4 +1,11 @@
 import axios from "axios";
+const getHeader = (token) => {
+  return {
+    headers: {
+      Authorization: token,
+    },
+  };
+};
 
 const API = {
   login: (username, password) => {
@@ -34,39 +41,35 @@ const API = {
   },
 
   fetchAllPosts: (token) => {
-    return axios.get("/api/content", {
-      headers: {
-        Authorization: token,
-      },
-    });
+    return axios.get("/api/content", getHeader(token));
   },
 
   addTofav: (id, token) => {
-    axios.put("/api/user/" + id, {}, { headers: { Authorization: token } });
+    axios.put("/api/user/" + id, {}, getHeader(token));
   },
 
   submitPost: (data, token) => {
-    axios.post("/api/content", data, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    axios.post("/api/content", data, getHeader(token));
   },
 
   fetchMyPosts: (token) => {
-    return axios.get("/api/content/user", {
-      headers: {
-        Authorization: token,
-      },
-    });
+    return axios.get("/api/content/user", getHeader(token));
   },
 
   deletePost: (id, token) => {
-    return axios.delete("/api/content/" + id, {
-      headers: {
-        Authorization: token,
-      },
-    });
+    return axios.delete("/api/content/" + id, getHeader(token));
+  },
+
+  fetchSavedPosts: (token) => {
+    return axios.get("/api/content/savedPosts", getHeader(token));
+  },
+
+  fetchPostData: (id, token) => {
+    return axios.get(`/api/content/${id}`, getHeader(token));
+  },
+
+  updatePost: (id, data, token) => {
+    axios.put(`/api/content/${id}`, data, getHeader(token));
   },
 };
 

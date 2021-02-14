@@ -1,23 +1,16 @@
 import { React, useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 import Menu from "../../Components/Menu/Menu";
 import "./SavedPosts.css";
+import ViewSavedPosts from "../../Components/ViewPosts/ViewSavedPosts";
+import API from "../../utils/API";
 
 const SavedPosts = (props) => {
   const [savedPosts, setSavedPosts] = useState([]);
-  useEffect(() => {
-    console.log("app.jsx");
-    axios
-      .get("/api/content/savedPosts", {
-        headers: {
-          Authorization: props.token,
-        },
-      })
-      .then((res) => {
-        setSavedPosts(res.data);
-      });
+  useEffect(async () => {
+    const response = await API.fetchSavedPosts(props.token);
+    setSavedPosts(response.data);
   }, []);
   if (props.token === null) {
     return <Redirect to="/login" />;
@@ -30,32 +23,7 @@ const SavedPosts = (props) => {
           <Menu token={props.token} />
         </div>
         <div className="col s5">
-          {savedPosts.map(
-            (
-              { category, title, imageURL, url, date, contentText, author },
-              index
-            ) => (
-              <div className="row" key={index}>
-                <div className="card">
-                  <div className="card-content white-text">
-                    <span className="card-title">{title}</span>
-                    <p className="postInfo">
-                      Posted by: {author.firstName + " " + author.lastName}
-                    </p>
-                    <br />
-                    <img src={imageURL} />
-                    <p>{contentText}</p>
-                    <br />
-                    <a className="linkTag" href={url}>{url.substring(0, 66)}</a>
-                    <br />
-                    {category}
-                    <br />
-                    {date.substring(0, 10)}
-                  </div>
-                </div>
-              </div>
-            )
-          )}
+          <ViewSavedPosts posts={savedPosts} />
         </div>
       </div>
     </div>
