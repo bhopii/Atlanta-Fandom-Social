@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Menu from "../../Components/Menu/Menu";
 import "./Post.css";
+import API from "../../utils/API";
 
 const Post = (props) => {
   const [category, setCategory] = useState("");
@@ -13,12 +13,11 @@ const Post = (props) => {
   const [contentText, setContentText] = useState("");
   const [redirect, setRedirect] = useState(null);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(props.token);
-    axios
-      .post(
-        "/api/content",
+    try {
+      await API.submitPost(
         {
           category,
           title,
@@ -26,19 +25,12 @@ const Post = (props) => {
           url,
           contentText,
         },
-        {
-          headers: {
-            Authorization: props.token,
-          },
-        }
-      )
-      .then((response) => {
-        setRedirect("/home");
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        props.token
+      );
+      setRedirect("/home");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (props.token === null) {

@@ -7,33 +7,19 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 import "./Profile.css";
+import API from "../../utils/API";
 
 const Profile = (props) => {
   const [posts, setPosts] = useState([]);
 
-  const getData = () => {
-    axios
-      .get("/api/content/user", {
-        headers: {
-          Authorization: props.token,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setPosts(response.data);
-      });
+  const getData = async () => {
+    const response = await API.fetchMyPosts(props.token);
+    setPosts(response.data);
   };
 
-  const handleDelete = (_id) => {
-    axios
-      .delete("/api/content/" + _id, {
-        headers: {
-          Authorization: props.token,
-        },
-      })
-      .then((response) => {
-        getData();
-      });
+  const handleDelete = async (_id) => {
+    await API.deletePost(_id, props.token);
+    getData();
   };
 
   useEffect(() => {
@@ -53,41 +39,49 @@ const Profile = (props) => {
           <Menu />
         </div>
 
-        {posts.map(({ category, title, imageURL, url, date, contentText, _id }, index) => (
-          <div className="col s5">
-            <div className="row" key={index}>
-              <div className="card">
-                <div className="card-content white-text">
-                  <span className="card-title">{title}</span>
-                  <img className="cardImage" src={imageURL} alt="Image from Card"/>
-                  <a href={url}>URL</a>
-                  {/* <img src={imageURL}/>
+        {posts.map(
+          (
+            { category, title, imageURL, url, date, contentText, _id },
+            index
+          ) => (
+            <div className="col s5">
+              <div className="row" key={index}>
+                <div className="card">
+                  <div className="card-content white-text">
+                    <span className="card-title">{title}</span>
+                    <img
+                      className="cardImage"
+                      src={imageURL}
+                      alt="Image from Card"
+                    />
+                    <a href={url}>URL</a>
+                    {/* <img src={imageURL}/>
                   <a href={url}>{url}</a> */}
-                  <p>{contentText}</p>
-
-                </div>
-                <div className="card-action">
-                  <button
-                    className="deleteBTN"
-                    onClick={() => {
-                      handleDelete(_id);
-                    }}
-                  >
-                    <i className="fa fa-trash-o"></i> Delete
-                  </button>
-                  <Link to={`/post/${_id}`}>
-                    <button className="editBTN">
-                      <i className="fa fa-pencil"></i> Edit
+                    <p>{contentText}</p>
+                  </div>
+                  <div className="card-action">
+                    <button
+                      className="deleteBTN"
+                      onClick={() => {
+                        handleDelete(_id);
+                      }}
+                    >
+                      <i className="fa fa-trash-o"></i> Delete
                     </button>
-                  </Link>
-                  <p>
-                    Category: {category}, Date: {date.substring(0, 10)}
-                  </p>
+                    <Link to={`/post/${_id}`}>
+                      <button className="editBTN">
+                        <i className="fa fa-pencil"></i> Edit
+                      </button>
+                    </Link>
+                    <p>
+                      Category: {category}, Date: {date.substring(0, 10)}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );

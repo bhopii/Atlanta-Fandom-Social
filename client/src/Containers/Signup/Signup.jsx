@@ -1,10 +1,9 @@
 import { React, useState } from "react";
-import axios from "axios";
-import { Alert } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
 import "./Signup.css";
 import Logo from "../../assets-sort/logoBanner/logoAFS.png";
+import API from "../../utils/API";
 
 const Signup = (props) => {
   const [userSignUp, setUserSignUp] = useState({
@@ -22,23 +21,21 @@ const Signup = (props) => {
     setUserSignUp({ ...userSignUp, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // call axios and connect to backend to insert details to our db using express routes
-    axios
-      .post("/api/signUp", userSignUp)
-      .then((res) => {
-        localStorage.setItem("loginKey", res.data.token);
-        console.log(res.data);
-        props.setToken(res.data.token);
-        // after the response is successful redirect to /home
-        setRedirect("/home");
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-        console.log(Object.values(err.response.data));
-        setErrors(Object.values(err.response.data.errors));
-      });
+    try {
+      const res = await API.signup(userSignUp);
+      localStorage.setItem("loginKey", res.data.token);
+      console.log(res.data);
+      props.setToken(res.data.token);
+      // after the response is successful redirect to /home
+      setRedirect("/home");
+    } catch (err) {
+      console.log(err.response.data);
+      console.log(Object.values(err.response.data));
+      setErrors(Object.values(err.response.data.errors));
+    }
   };
   if (redirect) {
     return <Redirect to={redirect} />;
@@ -46,7 +43,7 @@ const Signup = (props) => {
   return (
     <div>
       {errors.map((error) => (
-        <Alert color="danger">{error.message}!</Alert>
+        <div className="alert">{error.message}!</div>
       ))}
 
       {/* what displays on the page */}
@@ -119,6 +116,7 @@ const Signup = (props) => {
                   name="submitButton"
                   value="SignUp"
                 />
+                <label> </label>
               </form>
               <h6 className="goToSignUp">
                 Already have an account <a href="/login">Login Here</a>{" "}
