@@ -41,7 +41,7 @@ const Signup = (props) => {
     return <Redirect to={redirect} />;
   }
   return (
-    <div>
+    <div className= "main">
       {errors.map((error) => (
         <div className="alert">{error.message}!</div>
       ))}
