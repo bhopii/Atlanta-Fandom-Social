@@ -8,7 +8,7 @@ const Navbar = (props) => {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <ul className="left hide-on-med-and-down">
+          <ul className="left">
             <li>
               <div className="nameDiv l1">
                 <h4>{props.fullName} </h4>
@@ -32,7 +32,7 @@ const Navbar = (props) => {
               </div>
             </li>
           </ul>
-          <ul className="right hide-on-med-and-down">
+          <ul className="right">
             <li>
               <NavLink
                 to="/home"
