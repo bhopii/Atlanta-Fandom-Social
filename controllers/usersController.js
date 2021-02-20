@@ -1,6 +1,13 @@
 const db = require("../models/");
 
 module.exports = {
+  fethUsername: function(req, res) {
+    let {firstName, lastName} = req.user;
+    
+    const fullName = firstName.charAt(0).toUpperCase() + firstName.slice(1) + " " + lastName.charAt(0).toUpperCase() + lastName.slice(1);
+    res.send({fullName});
+  },
+
   userSignUp: async function (req, res) {
     try {
       const user = await db.User.create(req.body);

@@ -61,7 +61,7 @@ const Home = (props) => {
   }
   return (
     <div className="main">
-      <Navbar handleChange={handleChange} />
+      <Navbar handleChange={handleChange} fullName={props.fullName}/>
       <div className="row">
         {/* 6-columns (one-half) */}
         <div className="col s2">

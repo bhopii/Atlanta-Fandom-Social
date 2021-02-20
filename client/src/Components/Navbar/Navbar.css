@@ -2,7 +2,7 @@
 
 .nav-wrapper {
   background-color: #392171;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
 }
 
@@ -18,3 +18,14 @@
   width: 100px;
   height: 60px
 }
+
+.nameDiv {
+  margin: auto;
+  color:aqua;
+  padding-right: 30px;
+}
+
+.nav-wrapper-left {
+  background-color: #392171;
+  justify-content: center;
+} 
