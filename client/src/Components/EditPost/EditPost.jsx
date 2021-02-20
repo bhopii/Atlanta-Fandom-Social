@@ -56,6 +56,7 @@ const EditPost = (props) => {
       )
       .then((response) => {
         console.log(response.data);
+        props.changePosts({status: "Post edited by user " + props.fullName});
         setRedirect("/profile");
       })
       .catch((err) => {

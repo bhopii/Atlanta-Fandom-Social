@@ -8,17 +8,18 @@ const Navbar = (props) => {
     <div>
       <nav>
         <div className="nav-wrapper">
-          <ul className="left">
+          <ul className="left ">
+          <li>
+              <div className="cloakDiv col s1">
+                <img className="cloak" src={Cloak} alt="Strange cloak" />
+              </div>
+            </li>
             <li>
               <div className="nameDiv l1">
                 <h4>{props.fullName} </h4>
               </div>
             </li>
-            <li>
-              <div className="cloakDiv col s1">
-                <img className="cloak" src={Cloak} alt="Strange cloak" />
-              </div>
-            </li>
+
 
             <li>
               <div className="input-field col s4">
@@ -32,7 +33,7 @@ const Navbar = (props) => {
               </div>
             </li>
           </ul>
-          <ul className="right">
+          <ul className="right hide-on-med-and-down">
             <li>
               <NavLink
                 to="/home"

@@ -34,6 +34,7 @@ const Post = (props) => {
         }
       )
       .then((response) => {
+        props.changePosts({status: "Post added by user " + props.fullName});
         setRedirect("/home");
         console.log(response.data);
       })

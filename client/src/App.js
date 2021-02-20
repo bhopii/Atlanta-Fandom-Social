@@ -12,6 +12,7 @@ import Post from "./Containers/Post/Post";
 import EditPost from "./Components/EditPost/EditPost";
 import SavedPosts from "./Containers/SavedPosts/SavedPosts";
 import Axios from "axios";
+import { initiateSocket, disconnectSocket, sendMessage} from "./socket/socket";
 
 // these are for Bonus when we get MVP working
 // import WelcomeTopics from "./Containers/WelcomeTopics/WelcomeTopics";
@@ -22,6 +23,18 @@ library.add(fab, faCheckSquare, faCoffee);
 function App() {
   const [token, setToken] = useState(localStorage.getItem("loginKey"));
   const [fullName, setFullName] = useState("Welcome !!");
+
+  useEffect(()=> {
+    if(token && fullName) {
+      initiateSocket(fullName);
+    }
+    
+
+
+    return () => {
+      disconnectSocket();
+    }
+  }, [fullName]);
 
   useEffect(() => {
     //Call user api to get User Name and set the same to state
@@ -69,7 +82,7 @@ function App() {
             <Login setToken={setToken} />
           </Route>
           <Route exact path="/post">
-            <Post token={token} fullName={fullName}/>
+            <Post token={token} fullName={fullName} changePosts={sendMessage}/>
           </Route>
           <Route exact path="/home">
             <Home token={token} fullName={fullName}/>
@@ -78,7 +91,7 @@ function App() {
             <Profile token={token} fullName={fullName}/>
           </Route>
           <Route exact path="/post/:id">
-            <EditPost token={token} fullName={fullName}/>
+            <EditPost token={token} fullName={fullName} changePosts={sendMessage}/>
           </Route>
           <Route exact path="/savedPosts">
             <SavedPosts token={token} fullName={fullName}/>
