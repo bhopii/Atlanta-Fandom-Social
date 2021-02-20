@@ -56,6 +56,7 @@ const EditPost = (props) => {
       )
       .then((response) => {
         console.log(response.data);
+        props.changePosts({status: "Post edited by user " + props.fullName});
         setRedirect("/profile");
       })
       .catch((err) => {
@@ -73,7 +74,7 @@ const EditPost = (props) => {
 
   return (
     <div className="main">
-      <Navbar />
+      <Navbar fullName={props.fullName}/>
       <div className="row">
         <div className="col s4">
           <Menu token={props.token} />

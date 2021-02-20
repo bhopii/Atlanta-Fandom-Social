@@ -26,7 +26,7 @@ const SavedPosts = (props) => {
   }
   return (
     <div className="main">
-      <Navbar />
+      <Navbar fullName={props.fullName}/>
       <div className="row">
         <div className="col s2">
           <Menu token={props.token} />

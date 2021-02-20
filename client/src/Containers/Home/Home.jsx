@@ -10,6 +10,7 @@ import UpcomingEvents from "../../Components/UpcomingEvents/UpcomingEvents";
 import Footer from "../../Components/Footer/Footer";
 import { Redirect } from "react-router-dom";
 import "./Home.css";
+import { subscribeToNewPost } from "../../socket/socket";
 
 const Home = (props) => {
   const [posts, setPosts] = useState([]);
@@ -22,7 +23,8 @@ const Home = (props) => {
         post.category[0].toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
         post.title.toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
         post.contentText.toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
-        post.author.firstName.toLowerCase().indexOf(filter.toLowerCase()) > -1 ||
+        post.author.firstName.toLowerCase().indexOf(filter.toLowerCase()) >
+          -1 ||
         post.author.lastName.toLowerCase().indexOf(filter.toLowerCase()) > -1
     );
     return resultAfterFilter;
@@ -36,6 +38,15 @@ const Home = (props) => {
   };
 
   useEffect(() => {
+    subscribeToNewPost((err, data) => {
+      if (err) {
+        return;
+      }
+      fetchAllPosts();
+    });
+  }, [posts]);
+
+  const fetchAllPosts = () => {
     axios
       .get("/api/content", {
         headers: {
@@ -46,6 +57,10 @@ const Home = (props) => {
         console.log(response.data);
         setPosts(response.data);
       });
+  };
+
+  useEffect(() => {
+    fetchAllPosts();
   }, []);
 
   const addTofav = (id) => {
@@ -61,7 +76,7 @@ const Home = (props) => {
   }
   return (
     <div className="main">
-      <Navbar handleChange={handleChange} />
+      <Navbar handleChange={handleChange} fullName={props.fullName} />
       <div className="row">
         {/* 6-columns (one-half) */}
         <div className="col s2">

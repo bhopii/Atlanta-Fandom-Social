@@ -11,7 +11,7 @@ const Menu = (props) => {
             <li id="testHere">
               <NavLink to="/login">
                 <button className="savedPostBTN ">
-                  <i class="material-icons ">logout</i>
+                  <i className="material-icons ">logout</i>
                   <br />
                   Logout
                 </button>
@@ -23,7 +23,7 @@ const Menu = (props) => {
             <li>
               <NavLink to="/home">
                 <button className="savedPostBTN ">
-                  <i class="material-icons">home</i>
+                  <i className="material-icons">home</i>
                   <br />
                   Home
                 </button>
@@ -35,7 +35,7 @@ const Menu = (props) => {
             <li>
               <NavLink to="/post">
                 <button className="savedPostBTN">
-                  <i class="material-icons">create</i>
+                  <i className="material-icons">create</i>
                   <br />
                   Create Post
                 </button>
@@ -47,7 +47,7 @@ const Menu = (props) => {
             <li>
               <NavLink to="/savedPosts">
                 <button className="savedPostBTN">
-                  <i class="material-icons">save</i>
+                  <i className="material-icons">save</i>
                   <br />
                   Saved Posts
                 </button>
@@ -58,7 +58,7 @@ const Menu = (props) => {
             <li>
               <NavLink to="/profile">
                 <button className="savedPostBTN">
-                  <i class="material-icons">account_box</i>
+                  <i className="material-icons">account_box</i>
                   <br />
                   My Posts
                 </button>

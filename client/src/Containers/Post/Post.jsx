@@ -34,6 +34,7 @@ const Post = (props) => {
         }
       )
       .then((response) => {
+        props.changePosts({status: "Post added by user " + props.fullName});
         setRedirect("/home");
         console.log(response.data);
       })
@@ -52,7 +53,7 @@ const Post = (props) => {
 
   return (
     <div className="main">
-      <Navbar />
+      <Navbar fullName={props.fullName}/>
       <div className="row">
         <div className="col s2">
           <Menu token={props.token} />
